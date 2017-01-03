@@ -23,11 +23,11 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
 ### Create the classifier
-clf = SVC(C=10000.0, kernel="rbf")
+clf = SVC(C=10000, kernel="rbf")
 
 ### Slice training dataset down to 1% of it's original size0
-features_train = features_train[:len(features_train)/100] 
-labels_train = labels_train[:len(labels_train)/100] 
+#features_train = features_train[:len(features_train)/100] 
+#labels_train = labels_train[:len(labels_train)/100] 
 
 ### fit the classifier on the training features and labels
 t0 = time()
@@ -49,3 +49,14 @@ elem26 = pred[26]
 elem50 = pred[50]
 
 print elem10, elem26, elem50
+
+### Number of elements in test set predicted to be Chris
+count = 0
+
+for i in pred:
+	if i == 1:
+		count +=1
+print count
+
+### Alternate way to find number of elements predicted to be Chris
+print len(filter(lambda x:x==1,pred))
