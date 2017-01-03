@@ -23,7 +23,11 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
 ### Create the classifier
-clf = SVC(kernel="linear")
+clf = SVC(kernel="rbf")
+
+### Slice training dataset down to 1% of it's original size0
+features_train = features_train[:len(features_train)/100] 
+labels_train = labels_train[:len(labels_train)/100] 
 
 ### fit the classifier on the training features and labels
 t0 = time()
