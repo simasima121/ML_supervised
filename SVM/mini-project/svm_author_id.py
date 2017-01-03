@@ -23,7 +23,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
 ### Create the classifier
-clf = SVC(kernel="rbf")
+clf = SVC(C=10000.0, kernel="rbf")
 
 ### Slice training dataset down to 1% of it's original size0
 features_train = features_train[:len(features_train)/100] 
