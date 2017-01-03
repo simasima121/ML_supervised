@@ -41,5 +41,11 @@ print "predicting time:", round(time()-t0,3), "s"
 
 ### calculate and return the accuracy on the test data
 accuracy = accuracy_score(pred, labels_test)
-
 print accuracy
+
+### Prediction for element 10, 26, 50 of the test set
+elem10 = pred[10]
+elem26 = pred[26]
+elem50 = pred[50]
+
+print elem10, elem26, elem50
