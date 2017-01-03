@@ -9,7 +9,7 @@ from prep_terrain_data import makeTerrainData
 import matplotlib.pyplot as plt
 import numpy as np
 import pylab as pl
-from classifyDT import classify
+from classify import classify
 
 features_train, labels_train, features_test, labels_test = makeTerrainData()
 
@@ -19,6 +19,8 @@ clf = classify(features_train, labels_train)
 
 ### use trained classifier to predict labels for the test features
 pred = clf.predict(features_test)
+
+### Get the accuracy
 
 #### grader code, do not modify below this line
 
