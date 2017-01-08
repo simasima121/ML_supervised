@@ -1,8 +1,11 @@
 #!/usr/bin/python
 
 import matplotlib.pyplot as plt
+import sys
+
 from prep_terrain_data import makeTerrainData
 from class_vis import prettyPicture
+from time import time
 
 features_train, labels_train, features_test, labels_test = makeTerrainData()
 
@@ -29,12 +32,25 @@ plt.show()
 ### your code here!  name your classifier object clf if you want the 
 ### visualization code (prettyPicture) to show you the decision boundary
 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
 
+### Create and fit classifier on the training features and labels
+clf = RandomForestClassifier(n_estimators=10)
+t0 = time()
+clf.fit(features_train, labels_train)
+print "training time:", round(time()-t0,3), "s"
 
+### make prediction using classifier
+t0 = time()
+pred = clf.predict(features_test)
+print "predicting time:", round(time()-t0,3), "s"
 
+### compute and print accuracy of classifier
+acc = accuracy_score(labels_test, pred)
+print acc
 
-
-
+name = "RF"
 
 try:
     prettyPicture(clf, features_test, labels_test, name)
