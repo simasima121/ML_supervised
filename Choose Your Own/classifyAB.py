@@ -1,8 +1,11 @@
 #!/usr/bin/python
 
 import matplotlib.pyplot as plt
+import sys
+
 from prep_terrain_data import makeTerrainData
 from class_vis import prettyPicture
+from time import time
 
 features_train, labels_train, features_test, labels_test = makeTerrainData()
 
@@ -29,14 +32,29 @@ plt.show()
 ### your code here!  name your classifier object clf if you want the 
 ### visualization code (prettyPicture) to show you the decision boundary
 
+from sklearn.ensemble import AdaBoostClassifier
+#from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
 
+### Create and fit classifier on the training features and labels
+clf = AdaBoostClassifier(n_estimators=100)
+#clf = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1), n_estimators = 100)
+t0 = time()
+clf.fit(features_train, labels_train)
+print "training time:", round(time()-t0,3), "s"
 
+### make prediction using classifier
+t0 = time()
+pred = clf.predict(features_test)
+print "predicting time:", round(time()-t0,3), "s"
 
+### compute and print accuracy of classifier
+acc = accuracy_score(labels_test, pred)
+print acc
 
-
-
+name = "AB"
 
 try:
-    prettyPicture(clf, features_test, labels_test)
+    prettyPicture(clf, features_test, labels_test, name)
 except NameError:
     pass

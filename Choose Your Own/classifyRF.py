@@ -37,6 +37,6 @@ plt.show()
 
 
 try:
-    prettyPicture(clf, features_test, labels_test)
+    prettyPicture(clf, features_test, labels_test, name)
 except NameError:
     pass

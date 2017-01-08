@@ -50,7 +50,9 @@ print "predicting time:", round(time()-t0,3), "s"
 acc = accuracy_score(labels_test, pred)
 print acc
 
+name = "KNN"
+
 try:
-    prettyPicture(clf, features_test, labels_test)
+    prettyPicture(clf, features_test, labels_test, name)
 except NameError:
     pass
