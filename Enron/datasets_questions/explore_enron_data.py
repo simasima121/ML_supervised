@@ -28,3 +28,43 @@ for e in enron_data:
 		count += 1	
 print count
 
+### How many POIs in total
+pois = open("../final_project/poi_names.txt", "r")
+count = 0
+for p in pois:
+	if p[0] == "(":
+		count += 1
+print count
+
+print enron_data["PRENTICE JAMES"]
+print enron_data["COLWELL WESLEY"]["from_this_person_to_poi"]
+print enron_data["SKILLING JEFFREY K"]["exercised_stock_options"]
+
+### Who took home the most money out of Lay, Skilling and Fastow
+for e in enron_data:
+	if "SKILL" in e or "LAY" in e or "FASTOW" in e:
+		print e
+lay = enron_data["LAY KENNETH L"]
+skilling = enron_data["SKILLING JEFFREY K"]
+fastow = enron_data["FASTOW ANDREW S"]
+
+print lay["total_payments"]
+print skilling["total_payments"]
+print fastow["total_payments"]
+
+### How many people have a quantified salary or known email address
+count = 0
+counted = 0
+for e in enron_data:
+	if enron_data[e]['salary'] != "NaN":
+		count +=1 
+	if enron_data[e]['email_address'] != "NaN":
+		counted +=1 
+print count, counted
+
+### Percentage of people with NaN for total_payments
+count = 0
+for e in enron_data:
+	if enron_data[e]['total_payments'] == "NaN":
+		count +=1.0
+print (count/len(enron_data)) * 100.0
