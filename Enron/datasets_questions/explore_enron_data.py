@@ -16,6 +16,11 @@
 """
 
 import pickle
+import sys
+
+sys.path.append("../tools/")
+
+from feature_format import featureFormat, targetFeatureSplit
 
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
 print len(enron_data)
@@ -66,5 +71,13 @@ print count, counted
 count = 0
 for e in enron_data:
 	if enron_data[e]['total_payments'] == "NaN":
-		count +=1.0
+		count += 1.0
+print (count/len(enron_data)) * 100.0
+
+### Percentage of POIs with NaN for total_payments
+count = 0
+for e in enron_data:
+	if enron_data[e]['total_payments'] == "NaN" and enron_data[e]['poi'] == True:
+		print enron_data[e]
+		count += 1.0
 print (count/len(enron_data)) * 100.0
