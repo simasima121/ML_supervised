@@ -48,6 +48,8 @@ print reg.intercept_
 # Finding score of regression on training data - bad idea, use test data
 print reg.score(feature_train, target_train)
 
+# Finding score of regression on testing data - good idea
+print reg.score(feature_test, target_test)
 
 ### draw the scatterplot, with color-coded training and testing points
 import matplotlib.pyplot as plt
