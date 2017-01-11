@@ -64,6 +64,13 @@ if len(cleaned_data) > 0:
     ### refit your cleaned data!
     try:
         reg.fit(ages, net_worths)
+
+        # finding slope of new regression
+        print reg.coef_[0][0]
+
+        # finding score of new regression
+        print reg.score(ages_test, net_worths_test)
+
         plt.plot(ages, reg.predict(ages), color="blue")
     except NameError:
         print "you don't seem to have regression imported/created,"
