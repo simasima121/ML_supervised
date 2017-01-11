@@ -45,6 +45,10 @@ reg.fit(feature_train, target_train)
 print reg.coef_[0]
 print reg.intercept_
 
+# Finding score of regression on training data - bad idea, use test data
+print reg.score(feature_train, target_train)
+
+
 ### draw the scatterplot, with color-coded training and testing points
 import matplotlib.pyplot as plt
 for feature, target in zip(feature_test, target_test):
@@ -55,9 +59,6 @@ for feature, target in zip(feature_train, target_train):
 ### labels for the legend
 plt.scatter(feature_test[0], target_test[0], color=test_color, label="test")
 plt.scatter(feature_test[0], target_test[0], color=train_color, label="train")
-
-
-
 
 ### draw the regression line, once it's coded
 try:
