@@ -58,32 +58,36 @@ for d in data_dict:
 
 print max_stock, min_stock, max_salary, min_salary
 
-### Feature Scaling for salary and exercised_stock_options
-from sklearn.preprocessing import MinMaxScaler
-
-scaler = MinMaxScaler()
-salaries = numpy.array([[max_salary], [200000], [min_salary]])
-ex_stock_options = numpy.array([[max_stock], [1000000], [min_stock]])
-
-rescaled_salary = scaler.fit_transform(salaries)
-rescaled_stock = scaler.fit_transform(ex_stock_options)
-print rescaled_salary, rescaled_stock
-
 ### the input features we want to use 
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
-feature_3 = "total_payments"
+#feature_3 = "total_payments"
 poi  = "poi"
-features_list = [poi, feature_1, feature_2, feature_3]
+features_list = [poi, feature_1, feature_2]
+#features_list = [poi, feature_1, feature_2, feature_3]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
+
+### Feature Scaling for salary and exercised_stock_options
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+
+rescaled_finance_features = scaler.fit_transform(finance_features)
+
+financial_features_test = numpy.array([200000., 1000000.])
+print financial_features_test
+financial_features_test_transformed = scaler.transform(financial_features_test)
+print financial_features_test_transformed
 
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to 
 ### for f1, f2, _ in finance_features:
 ### (as it's currently written, the line below assumes 2 features)
-for f1, f2, _ in finance_features:
+for f1, f2 in finance_features:
+#for f1, f2, _ in finance_features:
+
     plt.scatter( f1, f2 )
 plt.show()
 
