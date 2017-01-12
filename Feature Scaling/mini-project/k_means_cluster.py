@@ -58,6 +58,17 @@ for d in data_dict:
 
 print max_stock, min_stock, max_salary, min_salary
 
+### Feature Scaling for salary and exercised_stock_options
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+salaries = numpy.array([[max_salary], [200000], [min_salary]])
+ex_stock_options = numpy.array([[max_stock], [1000000], [min_stock]])
+
+rescaled_salary = scaler.fit_transform(salaries)
+rescaled_stock = scaler.fit_transform(ex_stock_options)
+print rescaled_salary, rescaled_stock
+
 ### the input features we want to use 
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
