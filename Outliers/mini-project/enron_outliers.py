@@ -25,6 +25,8 @@ data = featureFormat(data_dict, features)
 for point in data:
     salary = point[0]
     bonus = point[1]
+    if salary > 1000000 and bonus > 5000000:
+    	print salary, bonus
     matplotlib.pyplot.scatter( salary, bonus )
 
 matplotlib.pyplot.xlabel("salary")
