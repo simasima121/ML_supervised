@@ -11,13 +11,7 @@ from feature_format import featureFormat, targetFeatureSplit
 data_dict = pickle.load( open("final_project_dataset.pkl", "r") )
 
 ### Removing outlier from dictionary 
-i = 0
-popped = []
-for d in data_dict:
-	if data_dict[d]["total_payments"] > 300000000 and data_dict[d]["total_payments"] != "NaN":
-		popped.append([d,i])
-	i+=1
-data_dict.pop(popped[0][0], popped[0][1])
+data_dict.pop("TOTAL", 0)
 
 features = ["salary", "bonus"]
 data = featureFormat(data_dict, features)
