@@ -30,13 +30,22 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
     plt.savefig(name)
     plt.show()
 
-
-
 ### load in the dict of dicts containing all the data on each person in the dataset
 data_dict = pickle.load( open("final_project_dataset.pkl", "r") )
 ### there's an outlier--remove it! 
 data_dict.pop("TOTAL", 0)
 
+### Find the max and min values taken by exercised_stock_options
+maximum = 0
+minimum = 1000000
+
+for d in data_dict:
+    if data_dict[d]["exercised_stock_options"] != "NaN":
+        if data_dict[d]["exercised_stock_options"] > maximum:
+            maximum = data_dict[d]["exercised_stock_options"]
+        if data_dict[d]["exercised_stock_options"] < minimum:
+            minimum = data_dict[d]["exercised_stock_options"]
+print maximum, minimum
 
 ### the input features we want to use 
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
