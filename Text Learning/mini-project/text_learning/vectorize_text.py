@@ -85,4 +85,9 @@ bag_of_words = vectoriser.fit_transform(word_data)
 #print bag_of_words
 #print vectoriser.vocabulary_.get("great")
 print len(vectoriser.get_feature_names())
-print bag_of_words[34597], bag_of_words[34596]
+
+for val in vectoriser.vocabulary_:
+    if vectoriser.vocabulary_[val] == 34597:
+        print val
+
+print vectoriser.vocabulary_.keys()[vectoriser.vocabulary_.values().index(34597)]
