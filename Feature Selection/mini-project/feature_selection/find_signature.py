@@ -62,4 +62,7 @@ for i in range(0, len(feature_importance)):
 #print vectorizer.vocabulary_.keys()[vectorizer.vocabulary_.values().index(33614)]
 
 ## Finding new word causing the most discrimination (word 14343)
-print vectorizer.vocabulary_.keys()[vectorizer.vocabulary_.values().index(14343)]
+#print vectorizer.vocabulary_.keys()[vectorizer.vocabulary_.values().index(14343)]
+
+## Finding new word causing the most discrimination (word 21323)
+print vectorizer.vocabulary_.keys()[vectorizer.vocabulary_.values().index(21323)]
