@@ -35,3 +35,19 @@ features_test  = vectorizer.transform(features_test).toarray()
 features_train = features_train[:150].toarray()
 labels_train   = labels_train[:150]
 
+## Creating Decision Tree Classifier and Training it
+from sklearn.tree import DecisionTreeClassifier
+
+clf = DecisionTreeClassifier()
+clf.fit(features_train, labels_train)
+
+## Making predictions with DT classifier
+pred = clf.predict(features_test)
+
+## compute accuracy of classifier
+from sklearn.metrics import accuracy_score
+acc = accuracy_score(pred, labels_test)
+print acc
+## Differnt way of computing accuracy
+accuracy = clf.score(features_test, labels_test)
+print accuracy
