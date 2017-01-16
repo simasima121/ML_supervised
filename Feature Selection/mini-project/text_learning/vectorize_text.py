@@ -36,6 +36,7 @@ word_data = []
 ### can iterate your modifications quicker
 temp_counter = 0
 
+print "starting"
 
 for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
@@ -50,7 +51,7 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
         email_text = parseOutText(email)
 
         ### use str.replace() to remove any instances of the words
-        replace_words = ["sara", "shackleton", "chris", "germani"]
+        replace_words = ["sara", "shackleton", "chris", "germani", "sshacklensf"]
         
         for w in replace_words:
             email_text = email_text.replace(w, "")
