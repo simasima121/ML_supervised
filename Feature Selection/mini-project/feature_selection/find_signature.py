@@ -57,3 +57,6 @@ feature_importance =  clf.feature_importances_
 for i in range(0, len(feature_importance)):
 	if feature_importance[i] > 0.2:
 		print feature_importance[i], i
+
+## Finding word causing the most discrimination (word 33614)
+print vectorizer.vocabulary_.keys()[vectorizer.vocabulary_.values().index(33614)]
