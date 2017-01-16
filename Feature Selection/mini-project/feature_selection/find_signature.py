@@ -51,3 +51,9 @@ print acc
 ## Differnt way of computing accuracy
 accuracy = clf.score(features_test, labels_test)
 print accuracy
+
+## Finding feature_importances_ to find relative importance of all features used
+feature_importance =  clf.feature_importances_
+for i in range(0, len(feature_importance)):
+	if feature_importance[i] > 0.2:
+		print feature_importance[i], i
