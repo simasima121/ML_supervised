@@ -37,6 +37,13 @@ clf.fit(features_train, labels_train)
 
 pred = clf.predict(features_test)
 
+count = 0
+for p in pred:
+	if p == 1:
+		count += 1
+
+print "The number of POIs predicted is:", count
+
 from sklearn.metrics import accuracy_score
 print accuracy_score(pred, labels_test)
 
