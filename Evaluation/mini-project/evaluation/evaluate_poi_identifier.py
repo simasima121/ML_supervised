@@ -49,5 +49,10 @@ print labels_test
 from sklearn.metrics import accuracy_score
 print accuracy_score(pred, labels_test)
 
+## Finding precision of classifier
+from sklearn.metrics import precision_score
+print precision_score(labels_test, pred)  
 
-
+## Finding recall of classifier
+from sklearn.metrics import recall_score
+print recall_score(labels_test, pred)
