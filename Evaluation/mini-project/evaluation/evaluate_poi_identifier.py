@@ -43,7 +43,9 @@ for p in pred:
 		count += 1
 
 print "The number of POIs predicted is:", count
-
+print "Total number of people is:", len(pred)
+print pred
+print labels_test
 from sklearn.metrics import accuracy_score
 print accuracy_score(pred, labels_test)
 
