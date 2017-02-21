@@ -3,6 +3,9 @@
 import sys
 import pickle
 import matplotlib.pyplot
+import numpy as np
+import pandas as pd
+
 sys.path.append("../tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
@@ -11,22 +14,33 @@ from tester import dump_classifier_and_data
 ### Task 1: Select what features you'll use.
 ### features_list is a list of strings, each of which is a feature name.
 ### The first feature must be "poi".
-features_list = ['poi','salary', 'exercised_stock_options', 'bonus', 'from_messages', 'from_poi_to_this_person', 'from_this_person_to_poi'] 
+features_list = ['poi', "bonus","deferral_payments", "deferred_income", "director_fees",
+             "exercised_stock_options", "expenses", "from_poi_to_this_person", 
+             "from_this_person_to_poi", "loan_advances", "long_term_incentive", "other",
+             "restricted_stock", "restricted_stock_deferred", "salary", 
+             "shared_receipt_with_poi", "total_payments", "total_stock_value"]
 
 ### Load the dictionary containing the dataset
 with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
 
-### Feature Scaling
-### Scale the from_poi_to_this_person, from_messages and from_this_person_to_poi
-
 ### Task 2: Remove outliers
+### To spot outliers, I used this link http://bl.ocks.org/dmenin/raw/d12a22521ad32cacc906/
+### to identify potential issues.
 
 ### Task 3: Create new feature(s)
 ### Store to my_dataset for easy export below.
 my_dataset = data_dict
 
-### Extract features and labels from dataset for local testing
+## Feature Scaling
+## Scale the money orientated features
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+
+
+
+### Extract features and labels from dataset for local testing.
+### Data is a numpy array
 data = featureFormat(my_dataset, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 
