@@ -48,7 +48,7 @@ data = featureFormat(my_dataset, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 
 # Example starting point. Try investigating other evaluation techniques!
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 features_train, features_test, labels_train, labels_test = \
     train_test_split(features, labels, test_size=0.3, random_state=42)
 
@@ -58,7 +58,69 @@ features_train, features_test, labels_train, labels_test = \
 ### you'll need to use Pipelines. For more info:
 ### http://scikit-learn.org/stable/modules/pipeline.html
 
-# Using AdaBoost DT with PCA classifier
+# Using Naive Bayes Classifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import recall_score, precision_score, accuracy_score # measures of performance
+
+clf1 = GaussianNB()
+clf1.fit(features_train, labels_train)
+pred1 = clf1.predict(features_test)
+
+print 'recall NB', recall_score(labels_test, pred1)
+print 'precision ', precision_score(labels_test, pred1)
+print 'accuracy_score ', accuracy_score(labels_test, pred1)
+print "---------------------------------"
+
+## RF Classifier
+from sklearn.ensemble import RandomForestClassifier
+clf = RandomForestClassifier(n_estimators=10)
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+print 'recall RF', recall_score(labels_test, pred)
+print 'precision ', precision_score(labels_test, pred)
+print 'accuracy_score ', accuracy_score(labels_test, pred)
+print "---------------------------------"
+
+## AdaBoost Classifier
+from sklearn.ensemble import AdaBoostClassifier
+clf = AdaBoostClassifier(n_estimators=100)
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+
+print 'recall AB', recall_score(labels_test, pred)
+print 'precision ', precision_score(labels_test, pred)
+print 'accuracy_score ', accuracy_score(labels_test, pred)
+print "---------------------------------"
+
+### Task 5: Tune your classifier to achieve better than .3 precision and recall 
+### using our testing script. Check the tester.py script in the final project
+### folder for details on the evaluation method, especially the test_classifier
+### function. Because of the small size of the dataset, the script uses
+### stratified shuffle split cross validation. For more info: 
+### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
+
+### Trying DTC with AdaBoost with GridSearchCV
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {"base_estimator__criterion" : ["gini", "entropy"],
+              "base_estimator__splitter" :   ["best", "random"],
+              "n_estimators": [1, 2, 10, 25, 50, 100, 150, 200]
+             }
+DTC = DecisionTreeClassifier(random_state = 11, max_features = "auto", class_weight = "balanced",max_depth = None)
+ABC = AdaBoostClassifier(base_estimator = DTC)
+# run grid search
+clf = GridSearchCV(ABC, param_grid=param_grid, scoring = 'roc_auc')
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+
+print 'recall Adaboost with GridSearchCV', recall_score(labels_test, pred)
+print 'precision ', precision_score(labels_test, pred)
+print 'accuracy_score ', accuracy_score(labels_test, pred)
+print "---------------------------------"
+
+### Using AdaBoost DT with PCA classifier
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.decomposition import PCA
@@ -71,29 +133,10 @@ clf = pipe
 clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 
-print 'recall ', recall_score(labels_test, pred)
+print 'recall AdaBoost with PCA', recall_score(labels_test, pred)
 print 'precision ', precision_score(labels_test, pred)
 print 'accuracy_score ', accuracy_score(labels_test, pred)
-
-# Using Naive Bayes Classifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import recall_score, precision_score, accuracy_score # measures of performance
-
-clf1 = GaussianNB()
-clf1.fit(features_train, labels_train)
-pred1 = clf1.predict(features_test)
-
-print 'recall ', recall_score(labels_test, pred1)
-print 'precision ', precision_score(labels_test, pred1)
-print 'accuracy_score ', accuracy_score(labels_test, pred1)
-
-
-### Task 5: Tune your classifier to achieve better than .3 precision and recall 
-### using our testing script. Check the tester.py script in the final project
-### folder for details on the evaluation method, especially the test_classifier
-### function. Because of the small size of the dataset, the script uses
-### stratified shuffle split cross validation. For more info: 
-### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
+print "---------------------------------"
 
 
 
