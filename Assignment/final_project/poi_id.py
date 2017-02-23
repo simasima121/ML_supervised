@@ -16,7 +16,10 @@ from tester import dump_classifier_and_data
 ### The first feature must be "poi".
 ## Loan advances removed as few entries, deferral_payments removed as gave worse fit
 ## Director Fees removed as only Non-POI entries, Restricted stock deferred removed as not enough entries for POI
-features_list = ['poi', "bonus", "salary", "expenses", "deferred_income", "exercised_stock_options",  "long_term_incentive", "other", "restricted_stock", "restricted_stock_deferred", "total_payments", "total_stock_value", "from_poi_to_this_person", "from_this_person_to_poi"]
+features_list = ['poi', "bonus", "salary", "expenses"]
+
+#['poi', "bonus", "salary", "expenses"]
+#['poi', "bonus", "salary", "expenses", "deferred_income", "exercised_stock_options",  "long_term_incentive", "other", "restricted_stock", "restricted_stock_deferred", "total_payments", "total_stock_value", "from_poi_to_this_person", "from_this_person_to_poi"]
 
 ### Load the dictionary containing the dataset
 with open("final_project_dataset.pkl", "r") as data_file:
@@ -101,47 +104,44 @@ print "---------------------------------"
 
 ### Trying DTC with AdaBoost with GridSearchCV
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import AdaBoostClassifier
 from sklearn.model_selection import GridSearchCV
 
 param_grid = {"base_estimator__criterion" : ["gini", "entropy"],
               "base_estimator__splitter" :   ["best", "random"],
               "n_estimators": [1, 2, 10, 25, 50, 100, 150, 200]
              }
-DTC = DecisionTreeClassifier(random_state = 11, max_features = "auto", class_weight = "balanced",max_depth = None)
+DTC = DecisionTreeClassifier(random_state = 11)
 ABC = AdaBoostClassifier(base_estimator = DTC)
 # run grid search
-clf = GridSearchCV(ABC, param_grid=param_grid, scoring = 'roc_auc')
-clf.fit(features_train, labels_train)
-pred = clf.predict(features_test)
+clfGTCV = GridSearchCV(ABC, param_grid=param_grid, scoring = 'roc_auc')
+clfGTCV.fit(features_train, labels_train)
+predGTCV = clfGTCV.predict(features_test)
 
-print 'recall Adaboost with GridSearchCV', recall_score(labels_test, pred)
-print 'precision ', precision_score(labels_test, pred)
-print 'accuracy_score ', accuracy_score(labels_test, pred)
+print 'recall Adaboost with GridSearchCV', recall_score(labels_test, predGTCV)
+print 'precision ', precision_score(labels_test, predGTCV)
+print 'accuracy_score ', accuracy_score(labels_test, predGTCV)
 print "---------------------------------"
 
 ### Using AdaBoost DT with PCA classifier
 from sklearn.pipeline import Pipeline
-from sklearn.ensemble import AdaBoostClassifier
 from sklearn.decomposition import PCA
-from sklearn.metrics import recall_score, precision_score, accuracy_score # measures of performance
 
 ## creating a pipeline and fitting it
 estimators = [('reduce_dim', PCA()), ('clf', AdaBoostClassifier(n_estimators=100))]
 pipe = Pipeline(estimators)
-clf = pipe
-clf.fit(features_train, labels_train)
-pred = clf.predict(features_test)
+clfPipe = pipe
+clfPipe.fit(features_train, labels_train)
+predPipe = clfPipe.predict(features_test)
 
 print 'recall AdaBoost with PCA', recall_score(labels_test, pred)
 print 'precision ', precision_score(labels_test, pred)
 print 'accuracy_score ', accuracy_score(labels_test, pred)
 print "---------------------------------"
 
-
-
 ### Task 6: Dump your classifier, dataset, and features_list so anyone can
 ### check your results. You do not need to change anything below, but make sure
 ### that the version of poi_id.py that you submit can be run on its own and
 ### generates the necessary .pkl files for validating your results.
 dump_classifier_and_data(clf, my_dataset, features_list)
+
+
